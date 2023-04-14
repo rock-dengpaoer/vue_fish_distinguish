@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title></title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
+
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/axios.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+            <a href="index.html" class="logo d-flex align-items-center">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <!-- <img src="assets/img/logo.png" alt=""> -->
+                <h1>HalobiosImage</h1>
+            </a>
+
+            <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+            <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a href="index.html" class="active">首页</a></li>
+                    <li><a href="upload.html">上传</a></li>
+                    <li><a href="download.html">下载</a></li>
+                    <li><a href="pricing.html">识别</a></li>
+                    <li class="dropdown"><a href="#"><span>小功能</span> <i
+                                class="bi bi-chevron-down dropdown-indicator"></i></a>
+                        <ul>
+                            <li><a href="#">开发日志</a></li>
+                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
+                                        class="bi bi-chevron-down dropdown-indicator"></i></a>
+                                <ul>
+                                    <li><a href="#">Deep Drop Down 3</a></li>
+                                    <li><a href="#">Deep Drop Down 4</a></li>
+                                    <li><a href="#">Deep Drop Down 5</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">目标标记</a></li>
+                            <li><a href="#">分割标记</a></li>
+                            <li><a href="#">Drop Down 4</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="about.html">关于</a></li>
+                    <div id="top">
+                        <li v-show="userShow == false"><a class="get-a-quote" href="login.html">登录</a></li>
+                        <li v-show="userShow == true"><a><button type="button" class="btn btn-success">{{ userName }}</button></a></li>
+                    </div>
+                </ul>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <main id="main">
+
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs">
+            <div class="page-header d-flex align-items-center"
+                style="background-image: url('assets/img/header.jpg');">
+                <div class="container position-relative">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-lg-6 text-center">
+                            <h2>特点</h2>
+                            <p>HalobiosImage数据集的特点</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <div class="container">
+                    <ol>
+                        <li><a href="index.html">首页</a></li>
+                        <li>特点</li>
+                    </ol>
+                </div>
+            </nav>
+        </div><!-- End Breadcrumbs -->
+
+        
+        <div class="container">
+            
+
+        </div>
+
+        
+
+
+    </main><!-- End #main -->
+
+    <div class="container">
+        <span></span>
+        <br>
+    </div>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-5 col-md-12 footer-info">
+                    <a href="index.html" class="logo d-flex align-items-center">
+                        <span>HalobiosImage</span>
+                    </a>
+                    <p>HalobiosImage致力于收集海洋生物的图像信息，推进计算机视觉和深度学习以及生物学研究，数据可免费提供给研究者进行学术研究使用，用于非商业用途。</p>
+                    <div class="social-links d-flex mt-4">
+                        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-6 footer-links">
+                    <h4>链接</h4>
+                    <ul>
+                        <li><a href="#">上传</a></li>
+                        <li><a href="#">下载</a></li>
+                        <li><a href="#">识别</a></li>
+                        <li><a href="#">关于</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-6 footer-links">
+                    <h4>特点</h4>
+                    <ul>
+                        <li><a href="#">特点1</a></li>
+                        <li><a href="#">特点2</a></li>
+                        <li><a href="#">特点3</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+                    <h4>联系我们</h4>
+                    <p>
+                        海南省<br>
+                        海口市<br>
+                        美兰区海南大学信息与通信工程学院<br><br>
+                        <strong>电话:</strong> 15178259144<br>
+                        <strong>邮箱:</strong> xdt0916@qq.com<br>
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <div class="copyright">
+                &copy; 2022 <strong><span>海南省嵌入式智能系统工程研究中心 海南大学</span></strong> 版权所有
+            </div>
+        </div>
+
+    </footer>
+    <!-- End Footer -->
+
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+<script>
+    var top = new Vue({
+        el: '#top',
+        data: {
+            userName: '',
+            userShow: false,
+        },
+        methods: {
+            getUserInfo: function () {
+                axios({
+                    method: 'get',
+                    url: "http://192.168.3.211:8080/check/getUserInfo",
+                    headers: { "authorization": localStorage.getItem("token") },
+                }).then(resp => {
+                    console.log(resp)
+                    if (resp.data.msg == "tokenOverdue") {
+                        console.log("登录过期");
+                        localStorage.clear("token");
+                    } else if (resp.data.msg == "notFindToken") {
+                        console.log("未登录");
+                    }
+                    if (resp.data.code == 200) {
+                        this.userName = resp.data.data;
+                        this.userShow = true;
+                    }
+                }).catch(function (error) {
+                    if (error.response) {
+                        // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                        alert("服务器错误！");
+                        localStorage.clear("accessToken");
+                        location.reload();
+                    } else if (error.request) {
+                        // 请求已经成功发起，但没有收到响应
+                        // `error.request` 在浏览器中是 XMLHttpRequest 的实例，
+                        // 而在node.js中是 http.ClientRequest 的实例
+                        console.log(error.request);
+                    } else {
+                        // 发送请求时出了点问题
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                })
+            }
+        },
+        created() {
+            this.getUserInfo();
+            // this.countAllBiologySpecies();
+        }
+    })
+</script>
+
+</html>

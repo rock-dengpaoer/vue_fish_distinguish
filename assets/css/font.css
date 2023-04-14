@@ -1,0 +1,10 @@
+.cat1{
+    font-family: myCatF;
+    font-size: 25px;
+    color:#117a8b;
+}
+
+@font-face {
+    font-family: myCatF;
+    src: url("../fonts/3.woff");
+}

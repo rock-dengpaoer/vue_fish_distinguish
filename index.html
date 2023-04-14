@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>HalobiosImage</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <!-- <link href="assets/img/favicon.png" rel="icon"> -->
+  <!-- <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"> -->
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <script src="assets/js/vue.js"></script>
+  <script src="assets/js/axios.min.js"></script>
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1>HalobiosImage</h1>
+      </a>
+
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="index.html" class="active">首页</a></li>
+          <li><a href="upload.html">上传</a></li>
+          <li><a href="download.html">下载</a></li>
+          <li><a href="distinguish.html">识别</a></li>
+          <li class="dropdown"><a href="#"><span>其他</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+              <li><a href="#">更新记录</a></li>
+              <li class="dropdown"><a href="#"><span>AI绘画</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                <ul>
+                  <li><a href="http://192.168.3.130:7860/">stable-diffusion-webui</a></li>
+                </ul>
+              </li>
+              <li><a href="#">目标标记</a></li>
+              <li><a href="#">自动分割-SAM</a></li>
+            </ul>
+          </li>
+          <li><a href="about.html">关于</a></li>
+          <div id="top">
+            <li v-show="userShow == false"><a class="get-a-quote" href="login.html">登录</a></li>
+            <li v-show="userShow == true"><a><button type="button" class="btn btn-success">{{ userName }}</button></a></li>
+          </div>
+        </ul>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header>
+  <!-- End Header -->
+  <!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+    <div class="container">
+      <div class="row gy-4 d-flex justify-content-between">
+        <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+          <h2 data-aos="fade-up">海洋生物数据集</h2>
+          <p data-aos="fade-up" data-aos-delay="100"> HalobiosImage致力于收集海洋生物的图像信息，推进计算机视觉和深度学习以及生物学研究，数据可免费提供给研究者进行学术研究使用，用于非商业用途。</p>
+
+          <form action="#" class="form-search d-flex align-items-stretch mb-3" data-aos="fade-up" data-aos-delay="200">
+            <input type="text" class="form-control" placeholder="种类">
+            <button type="submit" class="btn btn-primary text-nowrap">查询</button>
+          </form>
+
+          <div class="row gy-4" data-aos="fade-up" data-aos-delay="400">
+
+            <div class="col-lg-3 col-6">
+              <div class="stats-item text-center w-100 h-100">
+                <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
+                <p>纲</p>
+              </div>
+            </div><!-- End Stats Item -->
+
+            <div class="col-lg-3 col-6">
+              <div class="stats-item text-center w-100 h-100">
+                <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
+                <p>目</p>
+              </div>
+            </div><!-- End Stats Item -->
+
+            <div class="col-lg-3 col-6">
+              <div class="stats-item text-center w-100 h-100">
+                <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1" class="purecounter"></span>
+                <p>科</p>
+              </div>
+            </div><!-- End Stats Item -->
+
+            <div class="col-lg-3 col-6">
+              <div class="stats-item text-center w-100 h-100">
+                <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1" class="purecounter"></span>
+                <p>种</p>
+              </div>
+            </div><!-- End Stats Item -->
+
+          </div>
+        </div>
+
+        <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
+          <img src="assets/img/developer-team.svg" class="img-fluid mb-3 mb-lg-0" alt="">
+        </div>
+
+      </div>
+    </div>
+  </section><!-- End Hero Section -->
+
+  <main id="main">
+
+    <!-- ======= Featured Services Section ======= -->
+    <section id="featured-services" class="featured-services">
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up">
+            <div class="icon flex-shrink-0"><i class="fa-solid fa-fish"></i></div>
+            <div>
+              <h4 class="title">海洋生物数据集</h4>
+              <p class="description">主要包含常见的海洋生物</p>
+              <a data-bs-toggle="collapse" href="#feature1" aria-expanded="false" aria-controls="feature1" class="readmore stretched-link"><span>了解更多</span><i class="bi bi-arrow-right"></i></a>
+              
+            </div>
+            
+          </div>
+          
+          <!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon flex-shrink-0"><i class="fa-solid fa-anchor-lock" ></i></div>
+            <div>
+              <h4 class="title">长尾分布</h4>
+              <p class="description">符合自然界长尾分布</p>
+              <a data-bs-toggle="collapse" href="#feature2" aria-expanded="false" aria-controls="feature2" class="readmore stretched-link"><span>了解更多</span><i class="bi bi-arrow-right"></i></a>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon flex-shrink-0"><i class="fa-solid fa-poll"></i></div>
+            <div>
+              <h4 class="title">生物分类法</h4>
+              <p class="description">使用纲、目、科、种进行分类</p>
+              <a data-bs-toggle="collapse" href="#feature3" aria-expanded="false" aria-controls="feature3" class="readmore stretched-link"><span>了解更多</span><i class="bi bi-arrow-right"></i></a>
+            </div>
+          </div><!-- End Service Item -->
+
+        </div>
+
+        <div class="collapse" id="feature1">
+          <div class="card card-body">
+            致力于打造海洋生物数据集，搜罗网络各种资源，专业科研人员助力数据增长。
+          </div>
+        </div>
+
+        <div class="collapse" id="feature2">
+          <div class="card card-body">
+            遵循自然界生物长尾分布的特点，数据集中，不同物种的图片数量具有很大差距，数量最多的图片是数量最少的图片的将近一千倍。
+          </div>
+        </div>
+
+        <div class="collapse" id="feature3">
+          <div class="card card-body">
+            采用生物分类法，对采集到的图片进行分类，纲，目，科，种进行分类，对一些比较模糊的种类，可以只选择纲，或者目来进行分类。
+          </div>
+        </div>
+
+
+      </div>
+    </section><!-- End Featured Services Section -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="service" class="services pt-0">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <span>例程</span>
+          <h2>例程</h2>
+
+        </div>
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="card">
+              <div class="card-img">
+                <img width="100%" src="assets/img/image1-new.jpg" alt="" class="img-fluid">
+              </div>
+              <h3><a href="service-details.html" class="stretched-link">图像分类</a></h3>
+              <p>图像分类是计算机视觉中最基础的一个任务，也是几乎所有的基准模型进行比较的任务。</p>
+            </div>
+          </div><!-- End Card Item -->
+
+          <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="card">
+              <div class="card-img">
+                <img src="assets/img/object.jpg" alt="" class="img-fluid">
+              </div>
+              <h3><a href="service-details.html" class="stretched-link">目标检测</a></h3>
+              <p>目标检测的任务是找出图像中所有感兴趣的目标（物体），确定它们的类别和位置，是计算机视觉领域的核心问题之一。</p>
+            </div>
+          </div><!-- End Card Item -->
+
+        </div>
+
+      </div>
+    </section><!-- End Services Section -->
+
+    <!-- ======= Call To Action Section ======= -->
+    <!-- <section id="call-to-action" class="call-to-action">
+      <div class="container" data-aos="zoom-out">
+
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <h3>Call To Action</h3>
+            <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <a class="cta-btn" href="#">Call To Action</a>
+          </div>
+        </div>
+
+      </div>
+    </section> -->
+    <!-- End Call To Action Section -->
+
+  
+
+    <!-- ======= Frequently Asked Questions Section ======= -->
+    <section id="faq" class="faq">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <span>常见问题</span>
+          <h2>常见问题</h2>
+
+        </div>
+
+        <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-10">
+
+            <div class="accordion accordion-flush" id="faqlist">
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
+                    <i class="bi bi-question-circle question-icon"></i>
+                    下载页面没有显示图片
+                  </button>
+                </h3>
+                <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    需要登录账户才能够正常显示图片，不登录账户只能够显示种类
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2">
+                    <i class="bi bi-question-circle question-icon"></i>
+                    如何下载数据集
+                  </button>
+                </h3>
+                <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    数据集暂时未开放下载，下载页面的下载暂不提供下载功能。
+                  </div>
+                </div>
+              </div><!-- # Faq item-->
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
+                    <i class="bi bi-question-circle question-icon"></i>
+                    添加种类失败
+                  </button>
+                </h3>
+                <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    名称只能由小写字母、数字组成，注意不要添加其他字符。
+                  </div>
+                </div>
+              </div><!-- # Faq item-->
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-4">
+                    <i class="bi bi-question-circle question-icon"></i>
+                    搜索功能不可用。
+                  </button>
+                </h3>
+                <div id="faq-content-4" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">
+                    搜索功能正在加班加点的开发，为您带来的不便深表歉意。
+                  </div>
+                </div>
+              </div><!-- # Faq item-->
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Frequently Asked Questions Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-5 col-md-12 footer-info">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span>HalobiosImage</span>
+          </a>
+          <p>HalobiosImage致力于收集海洋生物的图像信息，推进计算机视觉和深度学习以及生物学研究，数据可免费提供给研究者进行学术研究使用，用于非商业用途。</p>
+          <div class="social-links d-flex mt-4">
+            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>链接</h4>
+          <ul>
+            <li><a href="#">上传</a></li>
+            <li><a href="#">下载</a></li>
+            <li><a href="#">识别</a></li>
+            <li><a href="#">关于</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>特点</h4>
+          <ul>
+            <li><a href="#">特点1</a></li>
+            <li><a href="#">特点2</a></li>
+            <li><a href="#">特点3</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <h4>联系我们</h4>
+          <p>
+            海南省<br>
+            海口市<br>
+            美兰区海南大学信息与通信工程学院<br><br>
+            <strong>电话:</strong> 15178259144<br>
+            <strong>邮箱:</strong> xdt0916@qq.com<br>
+          </p>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <div class="copyright">
+        &copy; 2022 <strong><span>海南省嵌入式智能系统工程研究中心 海南大学</span></strong> 版权所有
+      </div>
+    </div>
+
+  </footer><!-- End Footer -->
+  <!-- End Footer -->
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+<script>
+  var top = new Vue({
+      el: '#top',
+      data: {
+          userName: '',
+          userShow: false,
+      },
+      methods: {
+          getUserInfo: function () {
+              axios({
+                  method: 'get',
+                  url: "http://192.168.3.211:8080/check/getUserInfo",
+                  headers: { "authorization": localStorage.getItem("token") },
+              }).then(resp => {
+                  console.log(resp)
+                  if (resp.data.code == 200) {
+                      this.userName = resp.data.data;
+                      this.userShow = true;
+                  }
+              }).catch(function (error) {
+                  if (error.response) {
+                      // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
+                      console.log(error.response.data);
+                      console.log(error.response.status);
+                      console.log(error.response.headers);
+                      alert("服务器错误！");
+                      localStorage.clear("accessToken");
+                      location.reload();
+                  } else if (error.request) {
+                      // 请求已经成功发起，但没有收到响应
+                      // `error.request` 在浏览器中是 XMLHttpRequest 的实例，
+                      // 而在node.js中是 http.ClientRequest 的实例
+                      console.log(error.request);
+                  } else {
+                      // 发送请求时出了点问题
+                      console.log('Error', error.message);
+                  }
+                  console.log(error.config);
+              })
+          }
+      },
+      created() {
+          this.getUserInfo();
+          // this.countAllBiologySpecies();
+      }
+  })
+</script>
+
+</html>

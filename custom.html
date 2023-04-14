@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title></title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
+
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/axios.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+            <a href="index.html" class="logo d-flex align-items-center">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <!-- <img src="assets/img/logo.png" alt=""> -->
+                <h1>HalobiosImage</h1>
+            </a>
+
+            <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+            <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a href="index.html" class="active">首页</a></li>
+                    <li><a href="upload.html">上传</a></li>
+                    <li><a href="download.html">下载</a></li>
+                    <li><a href="distinguish.html">识别</a></li>
+                    <li class="dropdown"><a href="#"><span>小功能</span> <i
+                                class="bi bi-chevron-down dropdown-indicator"></i></a>
+                        <ul>
+                            <li><a href="#">开发日志</a></li>
+                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
+                                        class="bi bi-chevron-down dropdown-indicator"></i></a>
+                                <ul>
+                                    <li><a href="#">Deep Drop Down 3</a></li>
+                                    <li><a href="#">Deep Drop Down 4</a></li>
+                                    <li><a href="#">Deep Drop Down 5</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">目标标记</a></li>
+                            <li><a href="#">分割标记</a></li>
+                            <li><a href="#">Drop Down 4</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="about.html">关于</a></li>
+                    <div id="top">
+                        <li v-show="userShow == false"><a class="get-a-quote" href="login.html">登录</a></li>
+                        <li v-show="userShow == true"><a><button type="button" class="btn btn-success">{{ userName }}</button></a></li>
+                    </div>
+                </ul>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <main id="main">
+
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs">
+            <div class="page-header d-flex align-items-center"
+                style="background-image: url('assets/img/header.jpg');">
+                <div class="container position-relative">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-lg-6 text-center">
+                            <h2>添加种类</h2>
+                            <p>巴拉巴拉</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <div class="container">
+                    <ol>
+                        <li><a href="index.html">首页</a></li>
+                        <li>添加种类</li>
+                    </ol>
+                </div>
+            </nav>
+        </div><!-- End Breadcrumbs -->
+
+        <div id="main">
+            <div class="container">
+                <div>
+                    <ul class="nav justify-content-center">
+                        <li class="nav-item">
+                            <a class="nav-link" @click.prevent="selectView('class')">添加纲</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" @click.prevent="selectView('order')">添加目</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" @click.prevent="selectView('family')">添加科</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" @click.prevent="selectView('species')">添加种</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="add-class" v-show="classShow == true">
+                    <div class="mb-3">
+                        <h4><strong>纲</strong>-中文名称 <span class="text-danger">&#42;</span></h4>
+                        <input type="text" class="form-control" v-model="classNameCn" placeholder="请输入名称">
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>纲</strong>-英文名称 <span class="text-danger">&#42;</span> <span
+                                class="badge text-bg-warning">  Warning</span>
+                            <span class="badge text-bg-info ">名称只能由小写字母、数字组成</span>
+                        </h4>
+                        <input type="text" class="form-control" v-model="classNameLatin"
+                            placeholder="please input name">
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>纲</strong>-简短介绍
+                        </h4>
+                        <input type="text" class="form-control" v-model="classIntroduce" placeholder="请输入简短介绍">
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-grid gap-2">
+                            <a id="class add_button" class="btn btn-outline-success btn-lg btn-block"
+                            @click.prevent="putClass()">添加</a>
+                        </div>
+                       
+                    </div>
+                </div>
+                <!-- order -->
+                <div class="add-order" v-show="orderShow == true">
+                    <div class="mb-3">
+                        <h3>请选择纲</h3>
+                        <select id="basic" class="selectpicker show-tick form-control" data-live-search="true" v-model="selectClass">
+                            <option v-for="item in class_list" :value="item" 
+                            :key="item.nameLatin" v-if="item.nameLatin != 'undefined'" >{{
+                                item.nameLatin }} {{ item.nameCn }}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>目</strong>-中文名称 <span class="text-danger">&#42;</span></h4>
+                        <input type="text" class="form-control" v-model="orderNameCn" placeholder="请输入名称">
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>目</strong>-英文名称 <span class="text-danger">&#42; &nbsp; </span><span
+                                class="badge text-bg-warning">Warning</span>
+                            <span class="badge text-bg-info ">名称只能由小写字母、数字组成</span>
+                        </h4>
+                        <input type="text" class="form-control" v-model="orderNameLatin"
+                            placeholder="please input name">
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>目</strong>-简短介绍
+                        </h4>
+                        <input type="text" class="form-control" v-model="orderIntroduce" placeholder="请输入简短介绍">
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-grid gap-2">
+                            <a id="class add_button" class="btn btn-outline-success btn-lg btn-block"
+                            @click.prevent="putOrder()">添加</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- family -->
+                <div class="add-order" v-show="familyShow == true">
+                    <div class="mb-3">
+                        <h3>请选择纲</h3>
+                        <select id="basic" class="selectpicker show-tick form-control" data-live-search="true" v-model="selectClass">
+                            <option v-for="item in class_list" :value="item" 
+                            :key="item.nameLatin" v-if="item.nameLatin != 'undefined'" >{{
+                                item.nameLatin }} {{ item.nameCn }}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <h3>请选择目</h3>
+                        <select id="order" class="selectpicker show-tick form-control" data-live-search="true" v-model="selectOrder">
+                            <option v-for="item in order_list" :value="item" 
+                            :key="item.nameLatin" v-if="item.nameLatin != 'undefined'" >{{
+                                item.nameLatin }} {{ item.nameCn }}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>科</strong>-中文名称 <span class="text-danger">&#42;</span></h4>
+                        <input type="text" class="form-control" v-model="familyNameCn" placeholder="请输入名称">
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>科</strong>-英文名称 <span class="text-danger">&#42; &nbsp; </span><span
+                                class="badge text-bg-warning">Warning</span>
+                            <span class="badge text-bg-info ">名称只能由小写字母、数字组成</span>
+                        </h4>
+                        <input type="text" class="form-control" v-model="familyNameLatin"
+                            placeholder="please input name">
+                    </div>
+                    <div class="mb-3">
+                        <label><strong>科</strong>-简短介绍
+                        </label>
+                        <input type="text" class="form-control" v-model="familyIntroduce" placeholder="请输入简短介绍">
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-grid gap-2">
+                            <a id="class add_button" class="btn btn-outline-success btn-lg btn-block"
+                            @click.prevent="putFamily()">添加</a>
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- species -->
+                <div class="add-order" v-show="speciesShow == true">
+                    <div class="mb-3">
+                        <h3>请选择纲</h3>
+                        <select id="basic" class="selectpicker show-tick form-control" data-live-search="true" v-model="selectClass">
+                            <option v-for="item in class_list" :value="item" 
+                            :key="item.nameLatin" v-if="item.nameLatin != 'undefined'" >{{
+                                item.nameLatin }} {{ item.nameCn }}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <h3>请选择目</h3>
+                        <select id="order" class="selectpicker show-tick form-control" data-live-search="true" v-model="selectOrder">
+                            <option v-for="item in order_list" :value="item" 
+                            :key="item.nameLatin" v-if="item.nameLatin != 'undefined'" >{{
+                                item.nameLatin }} {{ item.nameCn }}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <h3>请选择科</h3>
+                        <select id="family" class="selectpicker show-tick form-control" data-live-search="true" v-model="selectFamily">
+                            <option v-for="item in family_list" :value="item" 
+                            :key="item.nameLatin" v-if="item.nameLatin != 'undefined'" >{{
+                                item.nameLatin }} {{ item.nameCn }}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>种</strong>-中文名称 <span class="text-danger">&#42;</span></h4>
+                        <input type="text" class="form-control" v-model="speciesNameCn" placeholder="请输入名称">
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>种</strong>-英文名称 <span class="text-danger">&#42; &nbsp; </span><span
+                                class="badge text-bg-warning">Warning</span>
+                            <span class="badge text-bg-info">名称只能由小写字母、数字组成</span>
+                        </h4>
+                        <input type="text" class="form-control" v-model="speciesNameLatin"
+                            placeholder="please input name">
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>DNA</strong></h4>
+                        <input type="text" class="form-control" v-model="speciesPoint1" placeholder="请输入DNA序列号">
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>形态特征</strong></h4>
+                        <input type="text" class="form-control" v-model="speciesPoint1" placeholder="请输入形态特征">
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>分布</strong></h4>
+                        <input type="text" class="form-control" v-model="speciesPoint2" placeholder="请输入分布">
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>生态习性</strong></h4>
+                        <input type="text" class="form-control" v-model="speciesPoint3" placeholder="请输入生态习性">
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>功能类群</strong> </h4>
+                        <input type="text" class="form-control" v-model="speciesPoint4" placeholder="请输入功能类群">
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>濒危等级</strong></h4>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                              未评估(NE)
+                            </label>
+                        </div>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                              数据缺乏(DD)
+                            </label>
+                        </div>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                              无危(LC)
+                            </label>
+                        </div>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                              近危(NT)
+                            </label>
+                        </div>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                              易危(VU)
+                            </label>
+                        </div>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                              濒危(EN)
+                            </label>
+                        </div>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                              极危(CR)
+                            </label>
+                        </div>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                              野外灭绝(EW)
+                            </label>
+                        </div>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                              灭绝(EX)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h4><strong>潜在危害</strong></h4>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="#" id="#" value="#" checked>
+                            <label class="form-check-label" for="harm">
+                            可致外伤
+                            </label>
+                        </div>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="#" id="#" value="#" checked>
+                            <label class="form-check-label" for="harm">
+                            有毒
+                            </label>
+                        </div>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="#" id="#" value="#" checked>
+                            <label class="form-check-label" for="harm">
+                            食用有毒
+                            </label>
+                        </div>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="#" id="#" value="#" checked>
+                            <label class="form-check-label" for="harm">
+                            无害
+                            </label>
+                        </div>
+                        <div class="form-check  form-check-inline">
+                            <input class="form-check-input" type="radio" name="#" id="#" value="#" checked>
+                            <label class="form-check-label" for="harm">
+                            其他
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-grid gap-2">
+                            <a id="class add_button" class="btn btn-outline-success btn-lg btn-block"
+                            @click.prevent="putSpecies()">添加</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+
+    </main><!-- End #main -->
+
+    <div class="container">
+        <span></span>
+        <br>
+    </div>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-5 col-md-12 footer-info">
+                    <a href="index.html" class="logo d-flex align-items-center">
+                        <span>HalobiosImage</span>
+                    </a>
+                    <p>HalobiosImage致力于收集海洋生物的图像信息，推进计算机视觉和深度学习以及生物学研究，数据可免费提供给研究者进行学术研究使用，用于非商业用途。</p>
+                    <div class="social-links d-flex mt-4">
+                        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-6 footer-links">
+                    <h4>链接</h4>
+                    <ul>
+                        <li><a href="#">上传</a></li>
+                        <li><a href="#">下载</a></li>
+                        <li><a href="#">识别</a></li>
+                        <li><a href="about.html">关于</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-6 footer-links">
+                    <h4>特点</h4>
+                    <ul>
+                        <li><a href="#">特点1</a></li>
+                        <li><a href="#">特点2</a></li>
+                        <li><a href="#">特点3</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+                    <h4>联系我们</h4>
+                    <p>
+                        海南省<br>
+                        海口市<br>
+                        美兰区海南大学信息与通信工程学院<br><br>
+                        <strong>电话:</strong> 15178259144<br>
+                        <strong>邮箱:</strong> xdt0916@qq.com<br>
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <div class="copyright">
+                &copy; 2022 <strong><span>海南省嵌入式智能系统工程研究中心 海南大学</span></strong> 版权所有
+            </div>
+        </div>
+
+    </footer>
+    <!-- End Footer -->
+
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+<script>
+    var top = new Vue({
+        el: '#top',
+        data: {
+            userName: '',
+            userShow: false,
+        },
+        methods: {
+            getUserInfo: function () {
+                axios({
+                    method: 'get',
+                    url: "http://192.168.3.211:8080/check/getUserInfo",
+                    headers: { "authorization": localStorage.getItem("token") },
+                }).then(resp => {
+                    console.log(resp)
+                    if (resp.data.msg == "tokenOverdue") {
+                        console.log("登录过期");
+                        localStorage.clear("token");
+                        alert("登录已经过期，不能添加种类")
+                    } else if (resp.data.msg == "notFindToken") {
+                        console.log("未登录");
+                        alert("未登录，不能添加种类")
+                    }
+                    if (resp.data.code == 200) {
+                        this.userName = resp.data.data;
+                        this.userShow = true;
+                    }
+                }).catch(function (error) {
+                    if (error.response) {
+                        // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                        alert("服务器错误！");
+                        localStorage.clear("accessToken");
+                        location.reload();
+                    } else if (error.request) {
+                        // 请求已经成功发起，但没有收到响应
+                        // `error.request` 在浏览器中是 XMLHttpRequest 的实例，
+                        // 而在node.js中是 http.ClientRequest 的实例
+                        console.log(error.request);
+                    } else {
+                        // 发送请求时出了点问题
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                })
+            }
+        },
+        created() {
+            this.getUserInfo();
+            // this.countAllBiologySpecies();
+        }
+    })
+</script>
+
+<script>
+    var vm = new Vue({
+        el: "#main",
+        data: {
+            classShow: true,
+            class_list: "",
+            classNameCn: "",
+            classNameCns: "",
+            classNameLatin: "",
+            classNameLatins: "",
+            classIntroduce: "",
+
+            orderShow: false,
+            order_list: "",
+            orderNameCn: "",
+            orderNameCns: "",
+            orderNameLatin: "",
+            orderNameLatins: "",
+            orderIntroduce: "",
+
+            familyShow: false,
+            family_list: "",
+            familyNameCn: "",
+            familyNameCns: "",
+            familyNameLatin: "",
+            familyNameLatins: "",
+            familyIntroduce: "",
+
+            speciesShow: false,
+            species_list: "",
+            speciesNameCn: "",
+            speciesNameCns: "",
+            speciesNameLatin: "",
+            speciesNameLatins: "",
+            speciesPoint1: "",
+            speciesPoint2: "",
+            speciesPoint3: "",
+            speciesPoint4: "",
+            speciesPoint5: "",
+
+            selectClass: "",
+            selectOrder: "",
+            selectFamily: "",
+
+        },
+        watch: {
+            classNameCn(val) {
+                console.log("classNameCn " + val);
+                this.check(val, this.classNameCns)
+            },
+            classNameLatin(val) {
+                console.log("classNameLatin " + val);
+                this.check(val, this.classNameLatins);
+            },
+            selectClass(val) {
+                console.log("change")
+                console.log("select " + val);
+                this.GetOrder(val.uuid);
+            },
+            orderNameCn(val) {
+                console.log("orderNameCn " + val);
+                this.check(val, this.orderNameCns)
+            },
+            orderNameLatin(val) {
+                console.log("orderNameLatin " + val);
+                this.check(val, this.orderNameLatins);
+            },
+            selectOrder(val) {
+                console.log("change")
+                console.log("select " + val);
+                this.GetFamily(val.uuid);
+            },
+            familyNameCn(val) {
+                console.log("familyNameCn " + val);
+                this.check(val, this.familyNameCns)
+            },
+            familyNameLatin(val) {
+                console.log("familyNameLatin " + val);
+                this.check(val, this.familyNameLatins);
+            },
+        },
+        methods: {
+            check(object, arrys) {
+                if (object == '' || object == null) {
+                    alert("未填写");
+                    return false;
+                }
+                console.log(arrys)
+                for (let i = 0; i < arrys.length; i++) {
+                    target = arrys[i];
+                    target = target.toLowerCase();
+                    if (object == target) {
+                        alert("已经存在 " + object);
+                        return false;
+                    }
+                }
+                return true;
+            },
+            // 首字母大写
+            capFirst(str) {
+                return str[0].toUpperCase() + str.slice(1);
+            },
+            putClass() {
+                console.log("putclass");
+                if (this.check(this.classNameCn, this.classNameCns) && this.check(this.classNameLatin, this.classNameLatins)) {
+                    console.log(" no error");
+                    axios({
+                        method: 'post',
+                        data: {
+                            nameCn: this.classNameCn,
+                            nameLatin: this.capFirst(this.classNameLatin),
+                            introduce: this.classIntroduce,
+                        },
+                        url: "http://192.168.3.211:8080/biologyClass/insertBiologyClass",
+                        headers: { "authorization": localStorage.getItem("token") },
+                    }).then(resp => {
+                        console.log(resp)
+                        if (resp.data.code == "200") {
+                            alert("添加成功！");
+                        } else if (resp.data.code == "300") {
+                            alert(resp.data.msg);
+                        } else if (resp.data.code == "302") {
+                            alert("参数超出正常取值范围, 添加失败");
+                        }
+                    })
+                } else {
+                    console.log("error")
+                    alert("error, 有未填写的数据 或数据库以存在该值");
+                }
+            },
+            GetClass() {
+                axios({
+                    method: 'get',
+                    url: "http://192.168.3.211:8080/public/selectAllBioloyClass"
+                }).then(resp => {
+                    console.log(resp)
+                    if (resp.data.code == "200") {
+                        this.class_list = resp.data.data;
+                        let arrayCn = new Array();
+                        let arrayLatin = new Array();
+                        for (let i = 0; i < resp.data.data.length; i++) {
+                            arrayCn[i] = this.class_list[i].nameCn;
+                            arrayLatin[i] = this.class_list[i].nameLatin;
+                        }
+                        this.classNameCns = arrayCn;
+                        this.classNameLatins = arrayLatin;
+                        console.log(this.classNameCns + this.orderNameLatins);
+                    }
+                })
+            },
+            GetOrder(val) {
+                axios({
+                    method: 'get',
+                    params: { "classUuid": val },
+                    url: "http://192.168.3.211:8080/public/selectBiologyOrderByClassUuid"
+                }).then(resp => {
+                    console.log(resp)
+                    if (resp.data.code == "200") {
+                        this.order_list = resp.data.data;
+                        let arrayCn = new Array();
+                        let arrayLatin = new Array();
+                        for (let i = 0; i < resp.data.data.length; i++) {
+                            arrayCn[i] = this.order_list[i].nameCn;
+                            arrayLatin[i] = this.order_list[i].nameLatin;
+                        }
+                        this.orderNameCns = arrayCn;
+                        this.orderNameLatins = arrayLatin;
+                        console.log(this.orderNameCns + this.orderNameLatins);
+                    }
+                })
+            },
+            putOrder() {
+                console.log("putorder");
+                if (this.check(this.orderNameCn, this.orderNameCns) && this.check(this.orderNameLatin, this.orderNameLatins) && this.selectClass != "") {
+                    console.log(" no error");
+                    axios({
+                        method: 'post',
+                        data: {
+                            nameCn: this.orderNameCn,
+                            nameLatin: this.capFirst(this.orderNameLatin),
+                            introduce: this.orderIntroduce,
+                            classUuid: this.selectClass.uuid,
+                        },
+                        url: "http://192.168.3.211:8080/biologyOrder/insertBiologyOrder",
+                        headers: { "authorization": localStorage.getItem("token") },
+                    }).then(resp => {
+                        console.log(resp)
+                        if (resp.data.code == "200") {
+                            alert("添加成功！");
+                        } else if (resp.data.code == "300") {
+                            alert(resp.data.msg);
+                        } else if (resp.data.code == "302") {
+                            alert("参数超出正常取值范围, 添加失败");
+                        }
+                    })
+                } else {
+                    console.log("error")
+                    alert("error, 有未填写的数据 或数据库以存在该值");
+                }
+            },
+            GetFamily(val) {
+                axios({
+                    method: 'get',
+                    params: { "orderUuid": val },
+                    url: "http://192.168.3.211:8080/public/selectAllBiologyFamilyByOrderUuid"
+                }).then(resp => {
+                    console.log(resp)
+                    if (resp.data.code == "200") {
+                        this.family_list = resp.data.data;
+                        let arrayCn = new Array();
+                        let arrayLatin = new Array();
+                        for (let i = 0; i < resp.data.data.length; i++) {
+                            arrayCn[i] = this.family_list[i].nameCn;
+                            arrayLatin[i] = this.family_list[i].nameLatin;
+                        }
+                        this.familyNameCns = arrayCn;
+                        this.familyNameLatins = arrayLatin;
+                        console.log(this.familyNameCns + this.familyNameLatins);
+                    }
+                })
+            },
+            putFamily() {
+                console.log("putFamily");
+                if (this.check(this.familyNameCn, this.familyNameCns) && this.check(this.familyNameLatin, this.familyNameLatins) && this.selectOrder != "") {
+                    console.log("no error");
+                    axios({
+                        method: 'post',
+                        data: {
+                            nameCn: this.familyNameCn,
+                            nameLatin: this.capFirst(this.familyNameLatin),
+                            introduce: this.familyIntroduce,
+                            orderUuid: this.selectOrder.uuid,
+                        },
+                        url: "http://192.168.3.211:8080/biologyFamily/insertBiologyFamily",
+                        headers: { "authorization": localStorage.getItem("token") },
+                    }).then(resp => {
+                        console.log(resp)
+                        if (resp.data.code == "200") {
+                            alert("添加成功！");
+                        } else if (resp.data.code == "300") {
+                            alert("参数格式错误，添加失败");
+                        } else if (resp.data.code == "302") {
+                            alert("参数超出正常取值范围, 添加失败");
+                        }
+                    })
+                } else {
+                    console.log("error")
+                    alert("error, 有未填写的数据 或数据库以存在该值");
+                }
+            },
+            GetSpecies(val) {
+                axios({
+                    method: 'get',
+                    params: { "familyUuid": val },
+                    url: "http://192.168.3.211:8080/public/selectAllBiologySpeciesByFamilyUuid"
+                }).then(resp => {
+                    console.log(resp)
+                    if (resp.data.code == "200") {
+                        this.species_list = resp.data.data;
+                        let arrayCn = new Array();
+                        let arrayLatin = new Array();
+                        for (let i = 0; i < resp.data.data.length; i++) {
+                            arrayCn[i] = this.species_list[i].nameCn;
+                            arrayLatin[i] = this.species_list[i].nameLatin;
+                        }
+                        this.speciesNameCns = arrayCn;
+                        this.speciesNameLatins = arrayLatin;
+                        console.log(this.speciesNameCns + this.speciesNameLatins);
+                    }
+                })
+            },
+            putSpecies() {
+                console.log("putSpecies");
+                if (this.check(this.speciesNameCn, this.speciesNameCns) && this.check(this.speciesNameLatin, this.speciesNameLatins) && this.selectFamily != "") {
+                    console.log("no error");
+                    axios({
+                        method: 'post',
+                        data: {
+                            nameCn: this.speciesNameCn,
+                            nameLatin: this.capFirst(this.speciesNameLatin),
+                            point1: this.speciesPoint1,
+                            poin2: this.speciesPoint2,
+                            poin3: this.speciesPoint3,
+                            poin4: this.speciesPoint4,
+                            poin5: this.speciesPoint5,
+                            familyUuid: this.selectFamily.uuid,
+                        },
+                        url: "http://192.168.3.211:8080/biologySpecies/insertBiologySpecies",
+                        headers: { "authorization": localStorage.getItem("token") },
+                    }).then(resp => {
+                        console.log(resp)
+                        if (resp.data.code == "200") {
+                            alert("添加成功！");
+                        } else if (resp.data.code == "300") {
+                            alert("参数格式错误，添加失败");
+                        } else if (resp.data.code == "302") {
+                            alert("参数超出正常取值范围, 添加失败");
+                        } else if (resp.data.code == "500") {
+                            alert("服务器错误，请联系管理员");
+                        }
+                    })
+                } else {
+                    console.log("error")
+                    alert("error, 有未填写的数据 或数据库以存在该值");
+                }
+            },
+            // 只显示一个页面，选择一个页面时，其他页面不显示
+            selectView: function (select) {
+                console.log("selectView " + select);
+                if (select == "class") {
+                    this.classShow = true;
+                    this.orderShow = false;
+                    this.familyShow = false;
+                    this.speciesShow = false;
+                } else if (select == "order") {
+                    this.classShow = false;
+                    this.orderShow = true;
+                    this.familyShow = false;
+                    this.speciesShow = false;
+                } else if (select == "family") {
+                    this.classShow = false;
+                    this.orderShow = false;
+                    this.familyShow = true;
+                    this.speciesShow = false;
+                } else if (select == "species") {
+                    this.classShow = false;
+                    this.orderShow = false;
+                    this.familyShow = false;
+                    this.speciesShow = true;
+                } else {
+                    alert.log("出错了!")
+                }
+            },
+        },
+        created() {
+            // 页面加载时执行的方法
+            this.GetClass();
+        },
+
+    })
+</script>
+
+</html>

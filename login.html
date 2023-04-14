@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HalobiosImage</title>
+    <link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/font.css">
+    
+    <!-- Custom styles for this template -->
+	<link rel="stylesheet" type="text/css" href="assets/css/signin.css">
+
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/axios.min.js"></script>
+
+    <style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+</head>
+
+<body class="text-center">
+	<form class="form-signin" id="login">
+		<h1 class="h3 mb-3 font-weight-normal"><p class="cat1" @click.prevent="toindex">HalobiosImage</p></h1>
+        <h2 class="h4 mb-4 font-weight-normal">请登录</h2>
+		<input id="inputEmail" class="form-control" placeholder="用户名" v-model="userName"  autofocus>
+		<input type="password" id="inputPassword" class="form-control" placeholder="密码" v-model="password">
+		<label>账户：test</label>
+		<br>
+		<label>密码：1234</label>
+		<br>
+		<div class="d-grid gap-2">
+			<button class="btn btn-primary" type="button" @click.prevent="doLogin">登录</button>
+			<button class="btn btn-success" type="button" href="register.html" disabled>注册</button>
+		</div>
+		<!-- <button type="button" class="btn btn-lg btn-primary"  @click.prevent="doLogin">登录</button>
+		<br>
+		<a class="btn btn-lg btn-success btn-block disabled" href="register.html">注册</a> -->
+		<p> &copy; 2022-2023</p>
+        <p><a href="#">海南省嵌入式智能系统工程研究中心 </a></p>
+        <p><a href="https://www.hainanu.edu.cn/">海南大学</a><a href="#">&nbsp;版权所有 </a></p>
+	</form>
+
+
+
+    
+
+	<script>
+		var vm = new Vue({
+			el: '#login',
+			data: {
+				userName: '',
+				password: '',
+			},
+			methods:{
+				toindex: function(){
+					window.location.href = "/index.html";
+				},
+				getUserInfo: function () {
+                    // 添加请求拦截器
+                    axios.interceptors.request.use(function (config) {
+                        console.log("添加请求拦截器");
+                        return config;
+                    }, function (error) {
+                        console.log("对请求错误做些什么");
+                        return Promise.reject(error);
+                    });
+
+                    // 添加响应拦截器
+                    axios.interceptors.response.use(function (response) {
+                        return response;
+                    }, function (error) {
+                        // 超出 2xx 范围的状态码都会触发该函数。
+                        // 对响应错误做点什么
+                        console.log("error")
+                        localStorage.clear("token");
+                        // location.reload();
+                        return Promise.reject(error);
+                    });
+                    axios({
+                        methods: 'get',
+                        url: "http://192.168.3.211:8080/check/getUserInfo",
+                        headers: {"authorization": localStorage.getItem("token")},
+                    }).then(resp => {
+						if(resp.data.code == 200){
+							alert("您已经登录过了，不需要再登录了");
+							window.location.href = "/index.html";
+						}
+					})
+                },
+				doLogin: function(){
+					console.log("this is vue function dologin")
+					console.log(this.userName);
+					console.log(this.password);
+					if(this.userName == null || this.userName == ''){
+						alert("请输入用户名");
+						return false;
+					}else if(this.password == null || this.password == ''){
+						alert("请输入密码")
+						return false;
+					}
+
+					var formData = new FormData();
+					formData.append("uname", this.userName);
+					formData.append("password", this.password);
+
+					axios({
+						method: 'post',
+						data: formData,
+						url: 'http://192.168.3.211:8080/account/login',
+					}).then(resp =>{
+						console.log("dologin resp")
+						console.log(resp.data);
+						if(resp.data.code == 404 || resp.data.code == 500){
+							this.userName = '',
+							this.password = '',
+							alert(resp.data.data);
+						} else if (resp.data.code == 123){
+							this.userName = '',
+							this.password = '',
+							alert("账号或密码错误")
+						}
+						else{
+							localStorage.clear('token');
+							console.log(resp.data.data);
+							localStorage.setItem("token", resp.data.data.token);
+							localStorage.setItem("UserName", this.userName);
+							window.location.href = "/index.html";
+							console.log(resp);
+						}
+						
+					})
+				}
+			},
+			created(){
+				this.getUserInfo();
+			}
+		})
+	</script>
+
+</body>
+
+
+</html>
