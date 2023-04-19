@@ -10,33 +10,33 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="../assets/img/favicon.png" rel="icon">
+    <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="assets/css/google_font/css2.css" rel="stylesheet">
+    <link href="../assets/css/google_font/css2.css" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
 
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 
 
 
     <!-- Template Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet">
-    <script src="assets/js/vue.js"></script>
-    <script src="assets/js/axios.min.js"></script>
+    <link href="../assets/css/main.css" rel="stylesheet">
+    <script src="../assets/js/vue.js"></script>
+    <script src="../assets/js/axios.min.js"></script>
 
-    <script src="assets/js/upload/dropzone.min.js"></script>
-    <link rel="stylesheet" href="assets/css/upload/dropzone.min.css" type="text/css" />
+    <script src="../assets/js/upload/dropzone.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/upload/dropzone.min.css" type="text/css" />
 
 
 </head>
@@ -47,7 +47,7 @@
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="../index.html" class="logo d-flex align-items-center">
                 <h1>HalobiosImage</h1>
             </a>
 
@@ -55,8 +55,8 @@
             <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a href="index.html" class="active">首页</a></li>
-                    <li><a href="upload.html">上传</a></li>
+                    <li><a href="../index.html" class="active">首页</a></li>
+                    <li><a href="../upload.html">上传</a></li>
                     <li><a href="download.html">下载</a></li>
                     <li><a href="distinguish.html">识别</a></li>
                     <li class="dropdown"><a href="#"><span>小功能</span> <i
@@ -93,7 +93,7 @@
         <!-- ======= Breadcrumbs ======= -->
         <div class="breadcrumbs">
             <div class="page-header d-flex align-items-center"
-                style="background-image: url('assets/img/header.jpg');">
+                style="background-image: url('../assets/img/header.jpg');">
                 <div class="container position-relative">
                     <div class="row d-flex justify-content-center">
                         <div class="col-lg-6 text-center">
@@ -106,7 +106,8 @@
             <nav>
                 <div class="container">
                     <ol>
-                        <li><a href="index.html">首页</a></li>
+                        <li><a href="../index.html">首页</a></li>
+                        <li>小型数据集</li>
                         <li>上传</li>
                     </ol>
                 </div>
@@ -116,44 +117,15 @@
         <div id="main">
             <div class="container">
 
+        
                 <div class="mb-3">
                     <label class="form-label">
-                        <h5>请选择纲</h5>
+                        <h5>请选择种类</h5>
                     </label>
-                    <select id="basic" class="show-tick form-control" data-live-search="true" v-model="classUuid">
-                        <option v-for="item in class_list" :value="item.uuid" :key="item.nameLatin"
-                            v-if="item.nameLatin != 'undefined'">{{
-                            item.nameLatin }} {{ item.nameCn }}</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">
-                        <h5>请选择目</h5>
-                    </label>
-                    <select id="order" class=" show-tick form-control" data-live-search="true" v-model="orderUuid">
-                        <option v-for="item in order_list" :value="item.uuid" :key="item.nameLatin"
-                            v-if="item.nameLatin != 'undefined'">{{item.nameLatin }} {{ item.nameCn }}</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">
-                        <h5>请选择科</h5>
-                    </label>
-                    <select id="family" class=" show-tick form-control" data-live-search="true" v-model="familyUuid">
-                        <option v-for="item in family_list" :value="item.uuid" :key="item.nameLatin"
-                            v-if="item.nameLatin != 'undefined'">{{item.nameLatin }} {{ item.nameCn }}</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">
-                        <h5>请选择种</h5>
-                    </label>
-                    <select id="species" class=" show-tick form-control" data-live-search="true" v-model="speciesUuid">
+                    <select id="animal" class=" show-tick form-control" data-live-search="true" v-model="animal_uuid">
                         <!-- <option value="nospecies" >undefined 未定义</option> -->
                         <option v-for="item in species_list" :value="item.uuid" :key="item.nameLatin"
-                            v-if="item.nameLatin != 'undefined'">{{item.nameLatin }} {{ item.nameCn }}</option>
+                            v-if="item.nameLatin != 'undefined'">{{item.nameEn }} {{ item.nameCn }}</option>
                     </select>
                 </div>
 
@@ -163,7 +135,7 @@
                 </div>
                 <div class="mb-3">
                     <h5>未知种类？<span class="badge text-bg-danger"><a class="text-white"
-                                href="upload_undefined.html">点此上传</a></span>
+                                href="#">点此上传</a></span>
                     </h5>
                 </div>
 
@@ -173,7 +145,7 @@
                         <div class="previews"></div>
                         
                         <!-- Now setup your input fields -->
-                        <input v-model="speciesUuid" name="speciesUuid" hidden>
+                        <input v-model="animal_uuid" name="uuid" hidden>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-success">上传</button>
                         </div>
@@ -255,15 +227,15 @@
     <div id="preloader"></div>
 
     <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/aos/aos.js"></script>
+    <script src="../assets/vendor/php-email-form/validate.js"></script>
 
     <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
+    <script src="../assets/js/main.js"></script>
 
 </body>
 
@@ -336,77 +308,19 @@
     var vm = new Vue({
         el: "#main",
         data: {
-            class_list: [],
-            classUuid: "",
-            order_list: "",
-            orderUuid: "",
-            family_list: "",
-            familyUuid: "",
             species_list: "",
-            speciesUuid: "",
+            animal_uuid: "",
 
             fileList1: [],
         },
         watch: {
-            classUuid(val) {
-                console.log(val);
-                this.GetOrder(val);
-            },
-            orderUuid(val) {
-                console.log(val);
-                this.GetFamily(val);
-            },
-            familyUuid(val) {
-                console.log(val);
-                this.GetSpecies(val);
-            },
-            speciesUuid(val) {
-                console.log(val);
-            },
         },
         methods: {
-            GetClass() {
+            GetAnimal(uuid) {
                 axios({
                     method: 'get',
-                    url: "http://192.168.3.211:8080/public/selectAllBioloyClass"
-                }).then(resp => {
-                    console.log(resp)
-                    if (resp.data.code == "200") {
-                        this.class_list = resp.data.data;
-                    }
-                })
-            },
-            GetOrder(uuid) {
-                console.log("get order")
-                axios({
-                    method: 'get',
-                    url: "http://192.168.3.211:8080/public/selectBiologyOrderByClassUuid?classUuid=" + uuid,
-                }).then(resp => {
-                    console.log(resp)
-                    if (resp.data.code == "200") {
-                        this.order_list = resp.data.data;
-                        console.log(this.order_list)
-                    }
-                })
-            },
-            GetFamily(uuid) {
-                console.log("get family")
-                axios({
-                    method: 'get',
-                    url: "http://192.168.3.211:8080/public/selectAllBiologyFamilyByOrderUuid?orderUuid=" + uuid,
-                }).then(resp => {
-                    console.log(resp)
-                    if (resp.data.code == "200") {
-                        this.family_list = resp.data.data;
-                        console.log(this.family_list)
-                    }
-                })
-            },
-            GetSpecies(uuid) {
-                console.log("get species")
-                axios({
-                    method: 'get',
-                    url: "http://192.168.3.211:8080/public/selectAllBiologySpeciesByFamilyUuid?familyUuid=" + uuid,
+                    url: "http://192.168.3.211:8080/small/animal/selectAll",
+                    headers: { "authorization": localStorage.getItem("token") },
                 }).then(resp => {
                     console.log(resp)
                     if (resp.data.code == "200") {
@@ -417,7 +331,7 @@
             },
         },
         created() {
-            this.GetClass()
+            this.GetAnimal()
         }
     })
 </script>
@@ -426,7 +340,7 @@
     Dropzone.options.uploadForm = {
     // Configuration options go here
     autoProcessQueue: false,
-    url: "http://192.168.3.211:8080/minio/insertMinioObject/",
+    url: "http://192.168.3.211:8080/small/animal/insertAnimalObject",
     method: "post",
     maxFilesize: 10 * 1024 * 1024,
     maxFiles: 300 * 10 * 1024 * 1024,
@@ -450,7 +364,7 @@
 
     this.on("addedfile", function(file){
         try{
-        var myselect=document.getElementById("species")
+        var myselect=document.getElementById("animal")
         var index=myselect.selectedIndex;
         if(myselect.options[index].value == undefined)
         {

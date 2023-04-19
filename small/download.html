@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title></title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="../assets/img/favicon.png" rel="icon">
+    <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="../assets/css/main.css" rel="stylesheet">
+
+    <script src="../assets/js/vue.js"></script>
+    <script src="../assets/js/axios.min.js"></script>
+
+    <!-- =======================================================
+  * Template Name: Logis
+  * Updated: Mar 10 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/logis-bootstrap-logistics-website-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+            <a href="../index.html" class="logo d-flex align-items-center">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <!-- <img src="../assets/img/logo.png" alt=""> -->
+                <h1>HalobiosImage</h1>
+            </a>
+
+            <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+            <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a href="../index.html" class="active">首页</a></li>
+                    <li><a href="upload.html">上传</a></li>
+                    <li><a href="download.html">下载</a></li>
+                    <li><a href="distinguish.html">识别</a></li>
+                    <li class="dropdown"><a href="#"><span>小功能</span> <i
+                                class="bi bi-chevron-down dropdown-indicator"></i></a>
+                        <ul>
+                            <li><a href="#">开发日志</a></li>
+                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
+                                        class="bi bi-chevron-down dropdown-indicator"></i></a>
+                                <ul>
+                                    <li><a href="#">Deep Drop Down 3</a></li>
+                                    <li><a href="#">Deep Drop Down 4</a></li>
+                                    <li><a href="#">Deep Drop Down 5</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">目标标记</a></li>
+                            <li><a href="#">分割标记</a></li>
+                            <li><a href="#">Drop Down 4</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact.html">关于</a></li>
+                    <div id="top">
+                        <li v-show="userShow == false"><a class="get-a-quote" href="login.html">登录</a></li>
+                        <li v-show="userShow == true"><a><button type="button" class="btn btn-success">{{ userName
+                                    }}</button></a></li>
+                    </div>
+                </ul>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <main id="main">
+
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs">
+            <div class="page-header d-flex align-items-center"
+                style="background-image: url('../assets/img/header.jpg');">
+                <div class="container position-relative">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-lg-6 text-center">
+                            <h2>下载</h2>
+                            <p>巴拉巴拉</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <div class="container">
+                    <ol>
+                        <li><a href="../index.html">首页</a></li>
+                        <li>小型数据集</li>
+                        <li><a @click.prevent="breakDownload()">下载</a></li>
+                        <li v-show="objectShow == true">{{animal_select.nameEn}}</li>
+                    </ol>
+
+                </div>
+            </nav>
+
+        </div><!-- End Breadcrumbs -->
+
+        <div id="main">
+
+
+            <div class="container" v-show="animalShow == true">
+                <br>
+                <div class="row justify-content-end">
+                    <div class="col-4">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="输入" v-model="search_content">
+                            <button class="btn btn-warning" @click.prevent="search()">搜索</button>
+                        </div>
+                    </div>
+
+                </div>
+                <table class="table table-hover" text-align:center>
+                    <thead>
+                        <tr class="text-center">
+                            <td scope="col">中文名</td>
+                            <td scope="col">拉丁名</td>
+                            <td scope="col">创建时间</td>
+                            <td scope="col">操作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template>
+                            <tr class="text-center" v-for="item in animal_list">
+                                <td @click.prevent="getObject(val=1, item)">{{ item.nameCn }}</td>
+                                <td @click.prevent="getObject(val=1, item)"><i>{{ item.nameEn }}</i></td>
+                                <td>{{ item.createTime | formatTimer }}</td>
+                                <td><a class="btn btn-primary btn-sm" @click.prevent="getObject(val=1, item)">访问</a>
+                                    <button type="button" class="btn btn-secondary btn-sm" disabled>下载</button>
+                                    <button type="button" class="btn btn-dark btn-sm ">修改</button>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        @click.prevent="delAnimal(item)">删除</button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-end pagination-sm">
+                        <li class="page-item" :class="animal_current_page_num == 1 ? 'page-item disabled' :'page-item'">
+                            <a class="page-link" @click.prevent="AnimalFirstPage()">首页</a>
+                        </li>
+                        <li class="page-item" :class="animal_current_page_num == 1 ? 'page-item disabled' :'page-item'">
+                            <a class="page-link" @click.prevent="AnimalPrePageination()">&laquo;</a>
+                        </li>
+                        <li v-for="item in animal_limiteArray"
+                            :class="item == animal_current_page_num ? 'page-item active' :'page-item'"
+                            :model="animal_current_page_num">
+                            <a class="page-link" @click.prevent="AnimalChangePageination(item)">{{ item }}</a>
+                        </li>
+                        <li class="page-item"
+                            :class="animal_current_page_num == animal_total_page ? 'page-item disabled' :'page-item'">
+                            <a class="page-link" @click.prevent="AnimalNextPageination()">&raquo;</a>
+                        </li>
+                        <li class="page-item"
+                            :class="animal_current_page_num == animal_total_page ? 'page-item disabled' :'page-item'">
+                            <a class="page-link" @click.prevent="AnimalLastPage()">尾页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- 显示图片 -->
+            <div class="container" v-show="objectShow == true">
+                <br>
+                <div class="row">
+                    <div class="col-12">
+                        <p>
+                            中文名：<strong><i>{{animal_select.nameCn }}</i></strong>
+                        </p>
+                    </div>
+                    <div class="col-12">
+                        <p>
+                            英文名：<strong><i>{{animal_select.nameEn }}</i></strong>
+                        </p>
+                    </div>
+                    <div class="col-12">
+                        <p>
+                            介绍：<strong><i>{{animal_select.introduce }}</i></strong>
+                        </p>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="row">
+                        <div class="col-sm-3" v-for="item in object_list">
+                            <div class="card" card-img-top>
+                                <img :src="item.url" class="card-img-top" :alt="item.objectName">
+                                <div class="card-body">
+                                    <button @click.prevent="delObject(item)" class="btn btn-sm btn-danger">删除</button>
+                                    <button @click.prevent="downloadImg(item)"
+                                        class="btn btn-sm btn-success">下载</button>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-12">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end pagination-sm">
+                                <li class="page-item"
+                                    :class="object_current_page_num == 1 ? 'page-item disabled' :'page-item'">
+                                    <a class="page-link" @click.prevent="ObjectFirstPage()">首页</a>
+                                </li>
+                                <li class="page-item"
+                                    :class="object_current_page_num == 1 ? 'page-item disabled' :'page-item'">
+                                    <a class="page-link" @click.prevent="ObjectPrePageination()">&laquo;</a>
+                                </li>
+                                <li v-for="item in object_limiteArray"
+                                    :class="item == object_current_page_num ? 'page-item active' :'page-item'"
+                                    :model="object_current_page_num">
+                                    <a class="page-link" @click.prevent="ObjectChangePageination(item)">{{ item }}</a>
+                                </li>
+                                <li class="page-item"
+                                    :class="object_current_page_num == object_total_page ? 'page-item disabled' :'page-item'">
+                                    <a class="page-link" @click.prevent="ObjectNextPageination()">&raquo;</a>
+                                </li>
+                                <li class="page-item"
+                                    :class="object_current_page_num == object_total_page ? 'page-item disabled' :'page-item'">
+                                    <a class="page-link" @click.prevent="ObjectLastPage()">尾页</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-5 col-md-12 footer-info">
+                    <a href="index.html" class="logo d-flex align-items-center">
+                        <span>HalobiosImage</span>
+                    </a>
+                    <p>HalobiosImage致力于收集海洋生物的图像信息，推进计算机视觉和深度学习以及生物学研究，数据可免费提供给研究者进行学术研究使用，用于非商业用途。</p>
+                    <div class="social-links d-flex mt-4">
+                        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-6 footer-links">
+                    <h4>链接</h4>
+                    <ul>
+                        <li><a href="#">上传</a></li>
+                        <li><a href="#">下载</a></li>
+                        <li><a href="#">识别</a></li>
+                        <li><a href="#">关于</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-6 footer-links">
+                    <h4>特点</h4>
+                    <ul>
+                        <li><a href="#">特点1</a></li>
+                        <li><a href="#">特点2</a></li>
+                        <li><a href="#">特点3</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+                    <h4>联系我们</h4>
+                    <p>
+                        海南省<br>
+                        海口市<br>
+                        美兰区海南大学信息与通信工程学院<br><br>
+                        <strong>电话:</strong> 15178259144<br>
+                        <strong>邮箱:</strong> xdt0916@qq.com<br>
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <div class="copyright">
+                &copy; 2022 <strong><span>海南省嵌入式智能系统工程研究中心 海南大学</span></strong> 版权所有
+            </div>
+        </div>
+
+    </footer>
+    <!-- End Footer -->
+
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/aos/aos.js"></script>
+    <script src="../assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="../assets/js/main.js"></script>
+
+</body>
+
+<script>
+    var top = new Vue({
+        el: '#top',
+        data: {
+            userName: '',
+            userShow: false,
+        },
+        methods: {
+            getUserInfo: function () {
+                axios({
+                    method: 'get',
+                    url: "http://192.168.3.211:8080/check/getUserInfo",
+                    headers: { "authorization": localStorage.getItem("token") },
+                }).then(resp => {
+                    console.log(resp)
+                    if (resp.data.msg == "tokenOverdue") {
+                        console.log("登录过期");
+                        localStorage.clear("token");
+                        alert("登录已经过期，不能查看图片")
+                    } else if (resp.data.msg == "notFindToken") {
+                        console.log("未登录");
+                        alert("未登录，不能查看图片")
+                    }
+                    if (resp.data.code == 200) {
+                        this.userName = resp.data.data;
+                        this.userShow = true;
+                    }
+                }).catch(function (error) {
+                    if (error.response) {
+                        // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                        alert("服务器错误！");
+                        localStorage.clear("accessToken");
+                        location.reload();
+                    } else if (error.request) {
+                        // 请求已经成功发起，但没有收到响应
+                        // `error.request` 在浏览器中是 XMLHttpRequest 的实例，
+                        // 而在node.js中是 http.ClientRequest 的实例
+                        console.log(error.request);
+                    } else {
+                        // 发送请求时出了点问题
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                })
+            }
+        },
+        created() {
+            this.getUserInfo();
+            // this.countAllBiologySpecies();
+        }
+    })
+</script>
+
+<script>
+    var vm = new Vue({
+        el: "#main",
+        data: {
+            animal_list: "",
+            // 当前页面
+            animal_current_page_num: 1,
+            // 页面大小
+            animal_page_size: "10",
+            // 总个数
+            animal_total_count: "",
+            // 总页数
+            animal_total_page: "",
+            // 限制的数组
+            animal_limiteArray: "",
+            animalShow: true,
+
+            object_list: "",
+            object_current_page_num: 1,
+            object_page_size: "20",
+            object_total_count: "",
+            object_total_page: "",
+            object_limiteArray: "",
+            objectShow: false,
+
+            animal_select: "",
+
+            search_content: "",
+        },
+        watch: {
+            animal_current_page_num(val) {
+                this.GetAnimal(val);
+            },
+            object_current_page_num(val) {
+                console.log("按钮发生变化")
+                console.log(this.animal_select)
+                this.getObject(val, this.animal_select);
+            }
+        },
+        methods: {
+            //删除种类
+            delAnimal(item) {
+                if (confirm('确定要执行此操作吗?')) {
+                    axios({
+                        method: "delete",
+                        url: "http://192.168.3.211:8080/small/animal/del?uuid=" + item.uuid,
+                        headers: { "authorization": localStorage.getItem("token") },
+                    }).then(resp => {
+                        if (resp.data.code == "300") {
+                            alert(resp.data.msg)
+                        } else if (resp.data.code == "500") {
+                            alert(resp.data.msg)
+                        } else {
+                            alert(resp.data.data)
+                        }
+                    })
+                }else{
+                    return false;
+                }
+            },
+
+            //下载图片
+            downloadImg(item) {
+                axios({
+                    method: "get",
+                    url: item.url,
+                    responseType: 'blob'
+                }).then(res => {
+                    const { data } = res
+                    const blob = new Blob([data])
+                    if ('download' in document.createElement('a')) {
+                        // 非IE下载
+                        const elink = document.createElement('a')
+                        elink.download = item.name
+                        elink.style.display = 'none'
+                        elink.href = URL.createObjectURL(blob)
+                        document.body.appendChild(elink)
+                        elink.click()
+                        URL.revokeObjectURL(elink.href) // 释放URL 对象
+                        document.body.removeChild(elink)
+                    } else {
+                        // IE10+下载
+                        navigator.msSaveBlob(blob, item.name)
+                    }
+
+                })
+            },
+
+            //删除图片
+            delObject(item) {
+                if (confirm('确定要执行此操作吗?')) {
+                    console.log(item);
+                    console.log("删除图片")
+                    axios({
+                        method: 'delete',
+                        data: {
+                            bucketName: item.bucketName,
+                            name: item.name,
+                            userUuid: item.userUuid,
+                            uuid: item.uuid
+                        },
+                        url: "http://192.168.3.211:8080/small/animal/delObject",
+                        headers: { "authorization": localStorage.getItem("token") },
+                    }).then(resp => {
+
+                        console.log(resp)
+                        if (resp.data.code == "300") {
+                            alert(resp.data.msg)
+                        } else if (resp.data.code == "500") {
+                            alert(resp.data.msg)
+                        } else {
+                            alert(resp.data.data)
+                        }
+                        this.getObject(this.object_current_page_num, this.animal_select)
+                    })
+                }
+                return false;
+
+
+            },
+
+            //搜索中文
+            search() {
+                axios({
+                    method: 'get',
+                    url: "http://192.168.3.211:8080/small/animal/selectAnimalByNameCn?nameCn=" + this.search_content,
+                    headers: { "authorization": localStorage.getItem("token") },
+                }).then(resp => {
+                    var result = resp.data.data;
+                    if (result == null) {
+                        axios({
+                            method: 'get',
+                            url: "http://192.168.3.211:8080/small/animal/selectAnimalByNameEn?nameEn=" + this.search_content,
+                            headers: { "authorization": localStorage.getItem("token") },
+                        }).then(resp => {
+                            var result = resp.data.data;
+                            if (result == null) {
+                                alert("没有搜索到数据")
+                            }
+                            if (resp.data.code == "400") {
+                                alert(result.msg);
+                            } else {
+                                this.animal_list = result
+                                // this.animal_limiteArray = this.limitItem1(1, result.length, 5);
+                            }
+                        })
+                    }
+                    if (resp.data.code == "400") {
+                        alert(result.msg);
+                    } else {
+                        this.animal_list = result
+                        // this.animal_limiteArray = this.limitItem1(1, 5, 3);
+                    }
+                })
+            },
+
+            AnimalNextPageination() {
+                this.animal_current_page_num++;
+            },
+            AnimalPrePageination() {
+                this.animal_current_page_num--;
+            },
+            AnimalChangePageination(item) {
+                this.animal_current_page_num = item;
+            },
+            AnimalFirstPage() {
+                this.animal_current_page_num = 1;
+            },
+            AnimalLastPage() {
+                this.animal_current_page_num = this.animal_total_page;
+            },
+            GetAnimal(val) {
+                axios({
+                    method: 'get',
+                    url: "http://192.168.3.211:8080/small/animal/selectAllPagination?currentPage=" + this.animal_current_page_num + "&pageSize=" + this.animal_page_size,
+                    headers: { "authorization": localStorage.getItem("token") },
+                }).then(resp => {
+                    var result = resp.data.data;
+                    console.log(result)
+                    let res_data_json = JSON.parse(result);
+                    console.log(res_data_json)
+                    if (result == null) {
+                        alert("无数据")
+                    }
+                    if (resp.data.code == "400") {
+                        alert(result.msg);
+                    } else {
+                        this.animal_list = res_data_json.animalList;
+                        console.log(this.animal_list)
+                        this.animal_current_page_num = res_data_json.currentPageNum;
+                        this.animal_page_size = res_data_json.pageSize;
+                        this.animal_total_count = res_data_json.totalCount;
+                        this.animal_total_page = res_data_json.totalPage;
+
+                        this.animal_limiteArray = this.limitItem1(this.animal_total_page, this.animal_current_page_num, 5);
+                        this.selectView("animal");
+                    }
+                })
+            },
+
+
+            getObject(val, item) {
+                axios({
+                    method: 'get',
+                    url: "http://192.168.3.211:8080/small/animal/selectAllImgInfoByUuid?currentPage=" + val +
+                        "&pageSize=" + this.object_page_size + "&uuid=" + item.uuid,
+                    headers: { "authorization": localStorage.getItem("token") },
+                }).then(resp => {
+                    console.log(resp)
+                    console.log(resp.data.data)
+                    var result = resp.data.data;
+                    let res_data_json = resp.data.data;
+
+                    console.log(res_data_json)
+                    if (result.code == 404) {
+                        alert(result.msg);
+                    } else {
+                        this.object_list = res_data_json.animalObjectInfos;
+
+                        if (res_data_json.totalCount == 0) {
+                            alert("没有图片");
+                        }
+
+                        this.object_current_page_num = res_data_json.currentPageNum;
+                        this.object_page_size = res_data_json.pageSize;
+                        this.object_total_count = res_data_json.totalCount;
+                        this.object_total_page = res_data_json.totalPage;
+
+                        this.object_limiteArray = this.limitItem1(this.object_total_page, this.object_current_page_num, 5);
+                        this.selectView("object");
+
+                        this.animal_select = item;
+                    }
+                })
+            },
+            ObjectNextPageination() {
+                this.object_current_page_num++;
+            },
+            ObjectPrePageination() {
+                this.object_current_page_num--;
+            },
+            ObjectChangePageination(item) {
+                this.object_current_page_num = item;
+            },
+            ObjectFirstPage() {
+                this.object_current_page_num = 1;
+            },
+            ObjectLastPage() {
+                this.object_current_page_num = this.object_total_page;
+            },
+            breakDownload() {
+                this.animalShow = true;
+                this.objectShow = false;
+            },
+
+            // PreviewImg: function (bucketName, categoryNum) {
+            //     if (categoryNum <= 0) {
+            //         alert("该种类还没有数据，快快上传吧！")
+            //         return;
+            //     }
+            //     window.location.href = "/view.html?bucketName=" + bucketName;
+            // },
+            // BaleDownloadImg: function (bucketName, imgNum) {
+            //     console.log("vue function BaleDownloadImg " + bucketName);
+            //     if (imgNum <= 0) {
+            //         alert("种类还没有图片，快快上传吧！")
+            //         return;
+            //     }
+            //     alert("服务器正在打包，请耐心等待！");
+            //     axios({
+            //         method: 'get',
+            //         url: 'http://localhost:8080/service/downloadALlObject?bucketName=' + bucketName,
+            //         headers: { "authorization": localStorage.getItem("accessToken") },
+            //         responseType: 'blob'
+            //     }).then(resp => {
+            //         console.log(resp);
+            //         let data = resp.data;
+            //         if (!data) {
+            //             return
+            //         }
+            //         resp.headers["Content-Disposition"] = "attachment; filename=" + bucketName + ".zip";
+
+            //         let url = window.URL.createObjectURL(new Blob([data], { type: 'application/x-zip-compressed' }))
+            //         console.log(url)
+            //         let a = document.createElement('a')
+            //         a.style.display = 'none'
+            //         a.href = url
+
+            //         a.setAttribute("download", bucketName + ".zip");
+
+            //         document.body.appendChild(a)
+            //         a.click() //执行下载
+            //         window.URL.revokeObjectURL(a.href) //释放url
+            //         document.body.removeChild(a) //释放标签
+            //     }).catch(function (error) {
+            //         if (error.response) {
+            //             // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
+            //             console.log(error.response.data);
+            //             console.log(error.response.status);
+            //             console.log(error.response.headers);
+            //             alert("服务器错误！");
+            //             location.reload();
+            //         } else if (error.request) {
+            //             // 请求已经成功发起，但没有收到响应
+            //             // `error.request` 在浏览器中是 XMLHttpRequest 的实例，
+            //             // 而在node.js中是 http.ClientRequest 的实例
+            //             console.log(error.request);
+            //         } else {
+            //             // 发送请求时出了点问题
+            //             console.log('Error', error.message);
+            //         }
+            //         console.log(error.config);
+            //     })
+            // },
+            // 只显示一个页面，选择一个页面时，其他页面不显示
+            selectView: function (select) {
+                if (select == "animal") {
+                    this.animalShow = true;
+                    this.objectShow = false;
+                } else if (select == "object") {
+                    this.animalShow = false;
+                    this.objectShow = true;
+                } else {
+                    alert.log("出错了!")
+                }
+
+            },
+            limitItem1(total_page, current_page_num, limiteSize) {
+                console.log("limitItem1")
+                let limiteArray = new Array;
+                half_limiteArray = Math.ceil(limiteSize / 2)
+                if (total_page < limiteSize) {
+                    return total_page;
+                }
+                if (total_page > current_page_num + half_limiteArray && current_page_num - half_limiteArray > 1) {
+                    console.log("fuhe")
+                    for (let i = 0; i < limiteSize; i++) {
+                        limiteArray[i] = current_page_num - half_limiteArray + i + 1;
+                    }
+                    console.log(limiteArray);
+                } else if (total_page <= current_page_num + half_limiteArray) {
+                    console.log("total_page <= current_page_num + half_limiteArray")
+                    for (let i = 0; i < limiteSize; i++) {
+                        limiteArray[i] = total_page - limiteSize + i + 1;
+                    }
+                    console.log(limiteArray)
+                } else if (current_page_num - half_limiteArray <= 1) {
+                    console.log("current_page_num - half_limiteArray <= 1")
+                    for (let i = 0; i < limiteSize; i++) {
+                        limiteArray[i] = i + 1;
+                    }
+                    console.log(limiteArray)
+                }
+                return limiteArray;
+
+            },
+        },
+        filters: {
+            formatTimer: function (value) {
+                let date = new Date(value);
+                let y = date.getFullYear();
+                let MM = date.getMonth() + 1;
+                MM = MM < 10 ? "0" + MM : MM;
+                let d = date.getDate();
+                d = d < 10 ? "0" + d : d;
+                let h = date.getHours();
+                h = h < 10 ? "0" + h : h;
+                let m = date.getMinutes();
+                m = m < 10 ? "0" + m : m;
+                let s = date.getSeconds();
+                s = s < 10 ? "0" + s : s;
+                return y + "-" + MM + "-" + d;
+            }
+
+        },
+        created() {
+            // 页面加载时执行的方法
+            this.GetAnimal(this.animal_current_page_num);
+        }
+    })
+</script>
+
+</html>
