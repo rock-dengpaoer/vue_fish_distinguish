@@ -34,6 +34,11 @@
     <script src="assets/js/vue.js"></script>
     <script src="assets/js/axios.min.js"></script>
 
+    <script src="assets/js/upload/formulate.min.js"></script>
+
+    <!-- <script src="assets/js/upload/dropzone.min.js"></script>
+    <link rel="stylesheet" href="assets/css/upload/dropzone.min.css" type="text/css" /> -->
+
 </head>
 
 <body>
@@ -76,7 +81,8 @@
                     <li><a href="about.html">关于</a></li>
                     <div id="top">
                         <li v-show="userShow == false"><a class="get-a-quote" href="login.html">登录</a></li>
-                        <li v-show="userShow == true"><a><button type="button" class="btn btn-success">{{ userName }}</button></a></li>
+                        <li v-show="userShow == true"><a><button type="button" class="btn btn-success">{{ userName
+                                    }}</button></a></li>
                     </div>
                 </ul>
             </nav><!-- .navbar -->
@@ -89,8 +95,7 @@
 
         <!-- ======= Breadcrumbs ======= -->
         <div class="breadcrumbs">
-            <div class="page-header d-flex align-items-center"
-                style="background-image: url('assets/img/header.jpg');">
+            <div class="page-header d-flex align-items-center" style="background-image: url('assets/img/header.jpg');">
                 <div class="container position-relative">
                     <div class="row d-flex justify-content-center">
                         <div class="col-lg-6 text-center">
@@ -109,14 +114,74 @@
                 </div>
             </nav>
         </div><!-- End Breadcrumbs -->
+        <br>
+        <div class="main">
+            <div class="container">
+                <!-- <img width="100%" src="assets/img/image.jpg"> -->
+                <div class="row" v-show="category_show == true">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="card" card-img-top>
+                                <img src="assets/img/distinguish/image_06734.jpg" class="card-img-top" alt="flower102识别"
+                                    @click.prevent="show_upload_flower()">
+                                <div class="card-body">
+                                    <a @click.prevent="show_upload_flower()">
+                                        <h2>flower102识别</h2>
+                                    </a>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
 
-        
-        <div class="container">
-            <img width="100%" src="assets/img/image.jpg">
+                <br>
+                <div v-show="flower_show == true">
+                    <div>
+                        <h1>flower102识别</h1>
+                    </div>
+                    <br>
+                    <div class="input-group mb-3">
+                        <form enctype="multipart/form-data" id="upload">
+                            <input type="file" class="form-control" name="file" >
+                            <br>
+                            <button type="button" class="btn btn-outline-primary btn-lg"
+                                @click.prevent="flower_submit()">提交</button>
+                        </form>
+                    </div>
+                    <!-- <form enctype="multipart/form-data" id="upload">
+                        <input type="file" name="file">
+                        <button @click.prevent="flower_submit()">提交</button>
+                    </form> -->
 
+                    <div v-show="flower_result_show">
+                        <h3>识别结果</h3>
+                        <table>
+                            <thead>
+                                <tr class="text-center">
+                                    <td scope="col">概率</td>
+                                    <td scope="col">名称</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template>
+                                    <tr class="text-center" v-for="(item, index) in flower_result">
+                                        <td>{{ index }}</td>
+                                        <td>{{ item }}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        
+
+
 
 
     </main><!-- End #main -->
@@ -223,8 +288,10 @@
                     if (resp.data.msg == "tokenOverdue") {
                         console.log("登录过期");
                         localStorage.clear("token");
+                        alert("登录过期，只能查看")
                     } else if (resp.data.msg == "notFindToken") {
                         console.log("未登录");
+                        alert("未登录，只能查看")
                     }
                     if (resp.data.code == 200) {
                         this.userName = resp.data.data;
@@ -256,6 +323,57 @@
             this.getUserInfo();
             // this.countAllBiologySpecies();
         }
+    })
+</script>
+
+<script>
+    var vm = new Vue({
+        el: "#main",
+        data: {
+            category_show: true,
+            flower_show: false,
+            flower_result_show: false,
+
+            flower_result:""
+        },
+        // watch: {
+
+        // },
+        methods: {
+            show_upload_flower: function () {
+                this.flower_show = true
+                this.category_show = false
+            },
+            flower_submit() {
+
+
+                var file_form = new FormData(upload);
+
+                axios({
+                    method: "post",
+                    data: file_form,
+                    url: "http://192.168.3.211:8080/distinguish/upload",
+                    headers: {
+                        "authorization": localStorage.getItem("token"),
+                        "Content-Type": "multipart/form-data"
+                    },
+                }).then(resp => {
+                    console.log(resp)
+                    if(resp.data.code == "200" && resp.data.data != "error"){
+                        alert("识别成功")
+                        this.flower_result_show = true;
+                        let result_json = JSON.parse(resp.data.data)
+                        this.flower_result = result_json
+                        console.log(result_json)
+                    }else if(resp.data.code == "300"){
+                        alert(resp.data.msg)
+                    }else{
+                        alert("错误,请检查文件是否为图片")
+                    }
+                })
+            }
+        },
+
     })
 </script>
 
