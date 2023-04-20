@@ -151,9 +151,10 @@
                                 <td @click.prevent="getObject(val=1, item)">{{ item.nameCn }}</td>
                                 <td @click.prevent="getObject(val=1, item)"><i>{{ item.nameEn }}</i></td>
                                 <td>{{ item.createTime | formatTimer }}</td>
-                                <td><a class="btn btn-primary btn-sm" @click.prevent="getObject(val=1, item)">访问</a>
+                                <td>
+                                    <!-- <a class="btn btn-primary btn-sm" @click.prevent="getObject(val=1, item)">访问</a> -->
                                     <button type="button" class="btn btn-secondary btn-sm" disabled>下载</button>
-                                    <button type="button" class="btn btn-dark btn-sm ">修改</button>
+                                    <!-- <button type="button" class="btn btn-dark btn-sm ">修改</button> -->
                                     <button type="button" class="btn btn-danger btn-sm"
                                         @click.prevent="delAnimal(item)">删除</button>
                                 </td>
@@ -447,6 +448,7 @@
                         } else {
                             alert(resp.data.data)
                         }
+                        this.GetAnimal(1, this.animal_select)
                     })
                 }else{
                     return false;
@@ -563,7 +565,7 @@
             AnimalLastPage() {
                 this.animal_current_page_num = this.animal_total_page;
             },
-            GetAnimal(val) {
+            GetAnimal() {
                 axios({
                     method: 'get',
                     url: "http://192.168.3.211:8080/small/animal/selectAllPagination?currentPage=" + this.animal_current_page_num + "&pageSize=" + this.animal_page_size,
